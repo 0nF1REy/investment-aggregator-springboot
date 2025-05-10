@@ -1,0 +1,5 @@
+SHOW DATABASES;
+
+USE mydatabase;
+
+SHOW TABLES;
