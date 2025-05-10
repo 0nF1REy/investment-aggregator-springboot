@@ -6,7 +6,6 @@ target/
 
 ### STS ###
 .apt_generated
-.classpath
 .factorypath
 .project
 .settings
@@ -31,3 +30,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Arquivos de variáveis de ambiente (nunca subir o real)
+.env
+.env.local
+.env.*.local
+
+# Evita subir configurações específicas da máquina
+docker-compose.override.yml
