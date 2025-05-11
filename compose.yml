@@ -1,16 +1,17 @@
 services:
   mysql:
-    image: mysql:8.0
+    image: mysql:latest
     environment:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     ports:
-      - "127.0.0.1:3307:3306"
+      - "2004:3306"
     volumes:
       - db_data:/var/lib/mysql
     restart: unless-stopped
+    tty: true
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
