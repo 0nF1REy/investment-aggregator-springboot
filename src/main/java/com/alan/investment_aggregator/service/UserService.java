@@ -1,12 +1,20 @@
 package com.alan.investment_aggregator.service;
 
-import com.alan.investment_aggregator.controller.CreateUserDto;
-import com.alan.investment_aggregator.controller.UpdateUserDto;
+import com.alan.investment_aggregator.controller.dto.CreateAccountDto;
+import com.alan.investment_aggregator.controller.dto.CreateUserDto;
+import com.alan.investment_aggregator.controller.dto.UpdateUserDto;
+import com.alan.investment_aggregator.entity.Account;
+import com.alan.investment_aggregator.entity.BillingAddress;
 import com.alan.investment_aggregator.entity.User;
+import com.alan.investment_aggregator.repository.AccountRepository;
+import com.alan.investment_aggregator.repository.BillingAddressRepository;
 import com.alan.investment_aggregator.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,8 +24,15 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private AccountRepository accountRepository;
+    private BillingAddressRepository billingAddressRepository;
+
+    public UserService(UserRepository userRepository,
+                       AccountRepository accountRepository,
+                       BillingAddressRepository billingAddressRepository) {
         this.userRepository = userRepository;
+        this.accountRepository = accountRepository;
+        this.billingAddressRepository = billingAddressRepository;
     }
 
     @Transactional
@@ -101,4 +116,23 @@ public class UserService {
             userRepository.deleteById(id);
         }
     }
+
+    public void createAccount(String userId, CreateAccountDto createAccountDto) {
+        var user = userRepository.findById(UUID.fromString(userId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        var account = new Account();
+        account.setUser(user);
+        account.setDescription(createAccountDto.description());
+
+        var billingAddress = new BillingAddress();
+        billingAddress.setStreet(createAccountDto.street());
+        billingAddress.setNumber(createAccountDto.number());
+        billingAddress.setAccount(account);
+
+        account.setBillingAddress(billingAddress);
+
+        accountRepository.save(account);
+    }
+
 }

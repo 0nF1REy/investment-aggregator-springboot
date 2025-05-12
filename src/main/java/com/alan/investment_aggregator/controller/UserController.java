@@ -1,5 +1,8 @@
 package com.alan.investment_aggregator.controller;
 
+import com.alan.investment_aggregator.controller.dto.CreateAccountDto;
+import com.alan.investment_aggregator.controller.dto.CreateUserDto;
+import com.alan.investment_aggregator.controller.dto.UpdateUserDto;
 import com.alan.investment_aggregator.entity.User;
 import com.alan.investment_aggregator.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -74,5 +77,12 @@ public class UserController {
     public ResponseEntity<Void> deleteById(@PathVariable("userId") String userId) {
         userService.deleteById(userId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{userId}/accounts")
+    public ResponseEntity<Void> createAccount(@PathVariable("userId") String userId,
+                                           @RequestBody CreateAccountDto createAccountDto) {
+        userService.createAccount(userId, createAccountDto);
+        return ResponseEntity.ok().build();
     }
 }
