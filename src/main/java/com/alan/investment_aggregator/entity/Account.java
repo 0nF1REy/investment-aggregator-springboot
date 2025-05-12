@@ -3,6 +3,7 @@ package com.alan.investment_aggregator.entity;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "tb_accounts")
@@ -15,6 +16,7 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")

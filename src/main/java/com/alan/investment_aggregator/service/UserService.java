@@ -23,9 +23,8 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
-
-    private AccountRepository accountRepository;
-    private BillingAddressRepository billingAddressRepository;
+    private final AccountRepository accountRepository;
+    private final BillingAddressRepository billingAddressRepository;
 
     public UserService(UserRepository userRepository,
                        AccountRepository accountRepository,
@@ -38,6 +37,9 @@ public class UserService {
     @Transactional
     public UUID createUser(CreateUserDto createUserDto) {
         try {
+            if (userRepository.existsByEmail(createUserDto.email())) {
+                throw new IllegalArgumentException("O e-mail já está em uso.");
+            }
 
             if (createUserDto.username() == null || createUserDto.username().isEmpty()) {
                 throw new IllegalArgumentException("Username cannot be blank");

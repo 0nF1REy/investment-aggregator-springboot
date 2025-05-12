@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.time.Instant;
 import java.util.List;
@@ -44,7 +45,9 @@ public class User {
     private Integer version;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Account> accounts;
+
 
     public User() {
     }

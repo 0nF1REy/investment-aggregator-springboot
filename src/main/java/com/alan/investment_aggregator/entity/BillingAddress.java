@@ -2,6 +2,7 @@ package com.alan.investment_aggregator.entity;
 
 import jakarta.persistence.*;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_billingaddress")
@@ -11,6 +12,7 @@ public class BillingAddress {
     @Column(name = "account_id")
     private UUID id;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
     @JoinColumn(name = "account_id")
