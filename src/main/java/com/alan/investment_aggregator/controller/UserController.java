@@ -1,5 +1,6 @@
 package com.alan.investment_aggregator.controller;
 
+import com.alan.investment_aggregator.controller.dto.AccountResponseDto;
 import com.alan.investment_aggregator.controller.dto.CreateAccountDto;
 import com.alan.investment_aggregator.controller.dto.CreateUserDto;
 import com.alan.investment_aggregator.controller.dto.UpdateUserDto;
@@ -84,5 +85,11 @@ public class UserController {
                                            @RequestBody CreateAccountDto createAccountDto) {
         userService.createAccount(userId, createAccountDto);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{userId}/accounts")
+    public ResponseEntity<List<AccountResponseDto>> listAccounts(@PathVariable("userId") String userId) {
+        var accounts = userService.listAccounts(userId);
+        return ResponseEntity.ok(accounts);
     }
 }

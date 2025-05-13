@@ -1,5 +1,6 @@
 package com.alan.investment_aggregator.service;
 
+import com.alan.investment_aggregator.controller.dto.AccountResponseDto;
 import com.alan.investment_aggregator.controller.dto.CreateAccountDto;
 import com.alan.investment_aggregator.controller.dto.CreateUserDto;
 import com.alan.investment_aggregator.controller.dto.UpdateUserDto;
@@ -120,6 +121,7 @@ public class UserService {
     }
 
     public void createAccount(String userId, CreateAccountDto createAccountDto) {
+
         var user = userRepository.findById(UUID.fromString(userId))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -137,4 +139,14 @@ public class UserService {
         accountRepository.save(account);
     }
 
+    public List<AccountResponseDto> listAccounts(String userId) {
+        var user = userRepository.findById(UUID.fromString(userId))
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return user.getAccounts()
+                .stream()
+                .map(ac ->
+                        new AccountResponseDto(ac.getAccountId().toString(), ac.getDescription()))
+                .toList();
+    }
 }
