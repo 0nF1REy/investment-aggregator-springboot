@@ -32,3 +32,11 @@ SELECT
 FROM tb_users;
 
 SELECT * FROM tb_stocks;
+
+SELECT * FROM tb_accounts_stocks;
+
+SELECT
+    quantity,
+    BIN_TO_UUID(account_id) AS account_id,
+    stock_id
+FROM tb_accounts_stocks;
