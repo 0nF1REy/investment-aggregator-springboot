@@ -16,6 +16,9 @@ public class Stock {
     @Column(name = "description")
     private String description;
 
+    public Stock() {
+    }
+
     public Stock(String stockId) {
         this.stockId = stockId;
     }
