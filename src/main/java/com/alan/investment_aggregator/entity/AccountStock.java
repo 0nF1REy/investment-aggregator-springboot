@@ -22,6 +22,9 @@ public class AccountStock {
     @Column(name = "quantity")
     private Integer quantity;
 
+    public AccountStock() {
+    }
+
     public AccountStock(AccountStockId id) {
         this.id = id;
     }

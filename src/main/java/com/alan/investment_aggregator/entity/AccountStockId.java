@@ -14,6 +14,9 @@ public class AccountStockId {
     @Column(name = "stock_id")
     private String stockId;
 
+    public AccountStockId() {
+    }
+
     public AccountStockId(UUID accountId) {
         this.accountId = accountId;
     }
