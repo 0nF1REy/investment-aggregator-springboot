@@ -30,3 +30,5 @@ SELECT
     update_timestamp,
     username
 FROM tb_users;
+
+SELECT * FROM tb_stocks;
